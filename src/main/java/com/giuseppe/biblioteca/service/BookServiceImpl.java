@@ -22,7 +22,7 @@ public class BookServiceImpl implements IBookService {
                 bookEntity.getId(),
                 bookEntity.getTitle(),
                 bookEntity.getAuthor(),
-                bookEntity.getPubblication_year(),
+                bookEntity.getAnno(),
                 bookEntity.getGenre()
         );
     }
@@ -61,7 +61,7 @@ public class BookServiceImpl implements IBookService {
 
         book.setTitle(bookDTO.title());
         book.setAuthor(bookDTO.author());
-        book.setPubblication_year(bookDTO.year());
+        book.setAnno(bookDTO.year());
         book.setGenre(bookDTO.genre());
 
         return toDTO(bookRepository.save(book));
