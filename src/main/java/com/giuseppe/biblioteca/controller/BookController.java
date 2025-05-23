@@ -58,4 +58,39 @@ public class BookController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/author/{author}")
+    public List<BookDTO> getByAuthor(@PathVariable String author) {
+        return bookService.findByAuthor(author);
+    }
+
+    @GetMapping("/genre/{genre}")
+    public List<BookDTO> getByGenre(@PathVariable String genre) {
+        return bookService.findByGenre(genre);
+    }
+
+    @GetMapping("/search/title/{title}")
+    public List<BookDTO> searchByTitle(@PathVariable String title) {
+        return bookService.findByTitleContaining(title);
+    }
+
+    @GetMapping("/year/before/{year}")
+    public List<BookDTO> getByYearBefore(@PathVariable int year) {
+        return bookService.findByPublicationYearBefore(year);
+    }
+
+    @GetMapping("/count/author/{author}")
+    public int countByAuthor(@PathVariable String author) {
+        return bookService.countBooksByAuthor(author);
+    }
+
+    @GetMapping("/sorted/year-desc")
+    public List<BookDTO> getAllSortedByYearDesc() {
+        return bookService.findAllOrderByPublicationYearDesc();
+    }
+
+    @GetMapping("/search/{keyword}")
+    public List<BookDTO> searchByTitleOrAuthor(@PathVariable String keyword) {
+        return bookService.findByTitleOrAuthor(keyword);
+    }
 }
