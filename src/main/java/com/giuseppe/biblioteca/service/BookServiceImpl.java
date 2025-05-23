@@ -17,30 +17,62 @@ public class BookServiceImpl implements IBookService {
         this.bookRepository = bookRepository;
     }
 
-    // ... metodi esistenti ...
+    private BookDTO toDTO(Book bookEntity) {
+        return new BookDTO(
+                bookEntity.getId(),
+                bookEntity.getTitle(),
+                bookEntity.getAuthor(),
+                bookEntity.getPubblication_year(),
+                bookEntity.getGenre()
+        );
+    }
+
+    private Book toEntity(BookDTO bookDTO) {
+        return new Book(
+                bookDTO.id(),
+                bookDTO.title(),
+                bookDTO.author(),
+                bookDTO.year(),
+                bookDTO.genre()
+        );
+    }
 
     @Override
     public List<BookDTO> getAllBooks() {
-        return List.of();
+        return bookRepository.findAll().stream()
+                .map(this::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public BookDTO getBookById(Long id) {
-        return null;
+        return bookRepository.findById(id).map(this::toDTO).orElseThrow();
     }
 
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
-        return null;
+        return toDTO(bookRepository.save(
+                toEntity(bookDTO)
+        ));
     }
 
     @Override
     public BookDTO updateBook(Long id, BookDTO bookDTO) {
-        return null;
+        Book book = bookRepository.findById(id).orElseThrow();
+
+        book.setTitle(bookDTO.title());
+        book.setAuthor(bookDTO.author());
+        book.setPubblication_year(bookDTO.year());
+        book.setGenre(bookDTO.genre());
+
+        return toDTO(bookRepository.save(book));
     }
 
     @Override
     public boolean deleteBook(Long id) {
+        if (bookRepository.findById(id).isPresent()) {
+            bookRepository.deleteById(id);
+            return true;
+        }
         return false;
     }
 
