@@ -1,0 +1,3 @@
+1) Date le aggiunte al repository, evolvere l'interfaccia service per poter richiamare tali funzioni.
+2) Far implementare al ServiceImpl i nuovi metodi dell'interfaccia.
+3) Richiamare dal controller i nuovi metodi del serivice esponendo nuove API.
